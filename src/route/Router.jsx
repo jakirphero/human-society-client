@@ -3,17 +3,33 @@ import {
 } from "react-router-dom";
 import Main from "../layout/Main";
 import Home from "../pages/home/home/Home";
+import PostForm from "../pages/postForm/PostForm";
+import Login from "../pages/Login/Login";
+import SignUp from "../pages/SignUp/SignUp";
+import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <Main></Main>,
+        element: (<PrivateRoute><Main></Main></PrivateRoute>),
         children: [
             {
                 path: "/",
                 element: <Home></Home>
-            }
+            },
+            {
+                path: "postForm",
+                element: <PostForm></PostForm>
+            },
         ]
+    },
+    {
+        path: "login",
+        element: <Login></Login>
+    },
+    {
+        path: "signUp",
+        element: <SignUp></SignUp>
     },
 ]);
 
