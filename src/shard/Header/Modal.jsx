@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const Modal = ({ user, logOut }) => {
 
     const handleLogOut = () => {
@@ -30,6 +32,12 @@ const Modal = ({ user, logOut }) => {
                         LogOut
                     </button>
                 )}
+                <Link to='/myProfile'>
+                    <button
+                        className="btn btn-link">
+                        Profile
+                    </button>
+                </Link>
             </div>
         </div>
     );

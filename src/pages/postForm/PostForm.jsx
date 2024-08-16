@@ -29,7 +29,10 @@ const PostForm = () => {
         if (res.data.success) {
             const postItem = {
                 text: data.text,
-                image: res.data.data.display_url
+                image: res.data.data.display_url,
+                userEmail: user?.email,
+                userImage: user?.photoURL,
+                userName: user?.displayName
             }
             const postRes = await axiosSecure.post('/post', postItem)
             if (postRes.data.insertedId) {

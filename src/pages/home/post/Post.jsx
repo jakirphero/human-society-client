@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faThumbsUp as faLike, faComment as faComment, faShareAlt } from '@fortawesome/free-solid-svg-icons';
 import { useState } from "react";
 import usePost from "../../../hook/usePost";
+import { Link } from "react-router-dom";
 
 const Post = () => {
     const [isExpended, setIsExpended] = useState(false);
@@ -21,11 +22,13 @@ const Post = () => {
                         <div className="card-body h-full flex flex-col justify-between">
                             <div className="card-title flex items-center mb-1">
                                 <img
-                                    src="https://www.w3schools.com/html/pic_trulli.jpg"
+                                    src={post.userImage}
                                     alt="Image"
                                     className="w-10 h-10 rounded-full mr-2"
                                 />
-                                <span className="text-blue-500 hover:underline">My Name</span>
+                                <Link to={`/userProfile/${post.userEmail}`}>
+                                    <span className="text-blue-500 hover:underline capitalize">{post.userName}</span>
+                                </Link>
                             </div>
                             <div>
                                 <p>

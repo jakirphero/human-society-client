@@ -3,7 +3,9 @@ import { useForm } from "react-hook-form";
 import { AuthContext } from "../../provider/AuthProvider";
 import { Link, useNavigate } from "react-router-dom";
 import useAxiosPublic from "../../hook/useAxiosPublic";
-
+import axios from "axios";
+const image_hosting_key = import.meta.env.VITE_IMAG_HOSTING_KEY;
+const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 const SignUp = () => {
     const { createUser, updateUserProfile } = useContext(AuthContext);
     const navigate = useNavigate();
@@ -15,27 +17,43 @@ const SignUp = () => {
     } = useForm();
     const onSubmit = data => {
         console.log(data);
-        createUser(data.email, data.password)
-            .then(result => {
-                const loggedUser = result.user;
-                console.log(loggedUser);
-                updateUserProfile(data.name, data.photoURL)
-                    .then(() => {
-                        console.log('User info Update')
-                        const userInfo = {
-                            name: data.name,
-                            email: data.email
-                        }
-                        axiosPublic.post('/users', userInfo)
-                            .then(res => {
-                                if (res.data.insertedId) {
-                                    console.log('user added to the database')
-                                    reset();
-                                    navigate('/')
-                                }
-                            })
-                    })
+        const formData = new FormData();
+        formData.append('image', data.image[0]);
+
+        axios.post(image_hosting_api, formData)
+            .then(imgResponse => {
+                const imageURL = imgResponse.data.data.display_url;
+                return createUser(data.email, data.password)
+                    .then(result => {
+                        const loggedUser = result.user;
+                        console.log(loggedUser);
+
+                        return updateUserProfile(data.name, imageURL)
+                            .then(() => {
+                                console.log('User info updated');
+
+                                const userInfo = {
+                                    name: data.name,
+                                    email: data.email,
+                                    photoURL: imageURL
+                                };
+                                return axiosPublic.post('/users', userInfo);
+                            });
+                    });
             })
+            .then(res => {
+                if (res.data.insertedId) {
+                    console.log('User added to the database');
+                    reset();
+                    navigate('/');
+                }
+            })
+            .catch(error => {
+                console.error('Error occurred:', error);
+                console.error('Response data:', error.response?.data);
+                console.error('Response status:', error.response?.status);
+                console.error('Response headers:', error.response?.headers);
+            });
     }
     return (
         <div className="hero bg-base-200 min-h-screen flex items-center justify-center">
@@ -67,11 +85,21 @@ const SignUp = () => {
                                         {...register("email", { required: true })}
                                     />
                                 </div>
-                                <div className="form-control mb-4">
+                                {/* <div className="form-control mb-4">
                                     <label className="label">
                                         <span className="label-text">Photo URL</span>
                                     </label>
                                     <input type="text"  {...register("photoURL", { required: true })} placeholder="Photo URL" className="input input-bordered" />
+                                </div> */}
+                                <div className="form-control mb-4">
+                                    <label className="label">
+                                        <span className="label-text">Profile Image</span>
+                                    </label>
+                                    <input
+                                        type="file"
+                                        {...register("image", { required: true })}
+                                        className="file-input file-input-bordered w-full"
+                                    />
                                 </div>
                                 <div className="form-control mb-4">
                                     <label className="label">
