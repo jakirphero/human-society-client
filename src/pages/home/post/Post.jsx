@@ -68,6 +68,7 @@ const Post = () => {
             {posts.map(post => (
                 <div key={post._id} className="card bg-base-100 w-[90%] mx-auto my-8 cursor-pointer shadow-xl overflow-hidden">
                     <div className="card-body h-full flex flex-col justify-between">
+                        {/* Post content */}
                         <div className="card-title flex items-center mb-1">
                             <img
                                 src={post.userImage}
@@ -112,6 +113,7 @@ const Post = () => {
                                 <FontAwesomeIcon className="mr-1 hover:text-blue-500" icon={faShareAlt} />Share
                             </button>
                         </div>
+                        {/* Comment section */}
                         {isCommentOpen[post._id] && (
                             <div className="mt-4">
                                 <textarea

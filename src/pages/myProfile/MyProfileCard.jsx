@@ -24,8 +24,8 @@ const MyProfileCard = ({ post, refetch }) => {
         }
     }
     return (
-        <div className="card w-full md:w-2/3 bg-white shadow-2xl rounded-lg overflow-hidden transition-transform transform hover:scale-105 relative">
-            <div className="card-body p-6">
+        <div className="card bg-base-100 w-[90%] mx-auto my-8 cursor-pointer shadow-xl overflow-hidden">
+            <div className="card-body h-full flex flex-col justify-between">
                 <div className="flex justify-between items-start mb-6">
                     <div className="flex items-center">
                         <div className="avatar">
@@ -76,14 +76,14 @@ const MyProfileCard = ({ post, refetch }) => {
                         />
                     </figure>
                 )}
-                <div className="card-actions flex justify-between items-center">
-                    <button className="btn btn-outline btn-primary flex items-center space-x-2">
+                <div className="flex items-center">
+                    <button className="mr-4">
                         <FontAwesomeIcon icon={faLike} /> <span>Like</span>
                     </button>
-                    <button className="btn btn-outline btn-primary flex items-center space-x-2">
+                    <button className="mr-4">
                         <FontAwesomeIcon icon={faComment} /> <span>Comment</span>
                     </button>
-                    <button className="btn btn-outline btn-primary flex items-center space-x-2">
+                    <button className="mr-4">
                         <FontAwesomeIcon icon={faShareAlt} /> <span>Share</span>
                     </button>
                 </div>

@@ -10,8 +10,8 @@ lerna-debug.log*
 node_modules
 dist
 dist-ssr
-*.local
-.env.local
+*.https://human-society1-server.vercel.app
+.env.https://human-society1-server.vercel.app
 
 # Editor directories and files
 .vscode/*
